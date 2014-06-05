@@ -10,3 +10,71 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+
+###########################################################################################
+#
+#
+#                                not mine just found it crisp
+
+ _ __(_)____________(_)____________  /______________
+ __  /__  __ \____  /_  _ \  ___/  __/  __ \_  ___/
+_   / _  / / /___  / /  __/ /__ / /_ / /_/ /  /    
+ /_/  /_/ /_/___  /  \___/\___/ \__/ \____//_/     
+             /___/                                 
+                           
+#
+#
+#
+###########################################################################################
+
+
+void setup() {
+  size(500, 500);
+  smooth(8);
+  noStroke();
+}
+ 
+float t, tt, ht, x, y;
+int N = 11;
+float l = 24;
+float sp = l*1.5;
+ 
+void di(float q) {
+  float qq = (4*q) % 1;
+  pushMatrix();
+  rotate(floor(4*q)*HALF_PI);
+  rect(-l/2, -l/2, l/3, l*(1-2/3.0*qq));
+  rect(-l/2, -l/2, l/3+l*2/3.0*qq, l/3);
+  popMatrix();
+}
+ 
+void draw() {
+  t = frameCount/80.0;
+ 
+  background(250);
+  pushMatrix();
+  translate(width/2, height/2);
+  rotate(QUARTER_PI);
+  for (int i=-N; i<=N; i++) {
+    for (int j=-N; j<=N; j++) {
+      if ((i+j)%2 == 0)
+        fill(64);
+      else
+        fill(32);
+      x = (i+.5)*sp; 
+      y = (j+.5)*sp;
+      pushMatrix();
+      translate(x, y);
+      tt = t + 10 - atan2(x, y)/TWO_PI - 0.0012*dist(x, y, 0, 0);
+      tt %= 1;
+      di(tt);
+      popMatrix();
+    }
+  }
+  popMatrix();
+ 
+  /*saveFrame("f##.png");
+   if(frameCount==80)
+   exit(); */
+}
